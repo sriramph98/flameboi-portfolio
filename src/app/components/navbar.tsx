@@ -1,12 +1,8 @@
 export default function NavBar() {
     return (
     <div>
-        <ul>
-            Work
-        </ul>
-        <ul>
-            Marketplace
-        </ul>
+        <ul className="text-2xl inline-block mr-4">Work </ul>
+        <ul className="text-2xl inline-block mr-4">Marketplace </ul>
     </div>
     )
   }
