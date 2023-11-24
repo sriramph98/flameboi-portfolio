@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import MusicList from './db/musicList.json';
 
-export default function Music() {
+export default function Work() {
   return (
     <>
 <div className='space-y-8'>

@@ -1,9 +1,13 @@
+import Link from 'next/link';
+
+
 export default function NavBar() {
+
     return (
-    <div className="space-x-8">
-        <ul className="text-2xl inline-block navActive">Work </ul>
-        <ul className="text-2xl inline-block navInActive">Marketplace </ul>
-    </div>
+    <nav className="flex space-x-8">
+        <Link href="/work" className="text-2xl inline-block navActive">Work</Link>
+        <Link href="/market" className="text-2xl inline-block navInActive">Marketplace</Link>
+    </nav>
     )
   }
   

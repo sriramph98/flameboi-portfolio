@@ -1,6 +1,7 @@
 import { FadeIn, SlideInBottom } from './animations/animation';
 import NavBar from './components/navbar';
-import Music from './music';
+import Work from './work';
+import Market from './market';
 import Head from 'next/head';
 
 export default function Home() {
@@ -12,7 +13,7 @@ export default function Home() {
         {/* Other head elements like title, meta tags can also go here */}
       </Head>
 
-<div className='flex flex-col justify-between h-screen p-8'>
+<div className='flex flex-col justify-between  h-screen p-8 '>
         <div className='h-48'>
           <h1 className='logo'>FLAMEBOI</h1>
           <h1 className='bio'>Independant Creative Artist</h1>
@@ -22,7 +23,7 @@ export default function Home() {
         
         
 
-        <div className='flex-grow'><Music/></div>
+        <div className='flex-grow overflow-visible'><Work/></div>
 </div>
         
         <footer className='flex  justify-between '>
