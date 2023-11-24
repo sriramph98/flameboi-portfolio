@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+}
+@supports (font-variation-settings: normal) {
+  :root { font-family: InterVariable, sans-serif; }
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -25,3 +33,40 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+.footer{
+  @apply bg-transparent w-full fixed bottom-8
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* For Webkit browsers */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  scrollbar-width: none;  /* For Firefox */
+}
+
+.logo{
+  @apply text-2xl font-extrabold leading-normal
+}
+
+.bio{
+  @apply text-xl font-normal leading-normal
+}
+
+.navActive{
+  @apply text-4xl font-bold 
+}
+
+.navInActive{
+  @apply text-4xl font-normal text-neutral-300 transition ease-in-out hover:text-black hover:font-bold 
+}
+
+.subNavActive{
+  @apply text-2xl font-bold 
+}
+
+.subNavInActive{
+  @apply text-2xl font-normal text-neutral-300 transition ease-in-out hover:text-black hover:font-bold 
+}

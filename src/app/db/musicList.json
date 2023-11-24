@@ -1,0 +1,26 @@
+
+[
+    {
+      "id": 1,
+      "trackName": "170cm",
+      "artistName": "Paal Dabba",
+      "platform": "Spotify",
+      "imageUrl": "/thumbnails/170cm.png"
+    },
+    {
+      "id": 2,
+      "trackName": "Soupboy",
+      "artistName": "McDevesh",
+      "platform": "Spotify",
+      "imageUrl": "/thumbnails/soupboy.png"
+    },
+    {
+      "id": 2,
+      "trackName": "One Day",
+      "artistName": "Lil Phil",
+      "platform": "Spotify",
+      "imageUrl": "/thumbnails/oneDay.png"
+    }
+    
+  ]
+  
