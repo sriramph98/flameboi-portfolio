@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: Inter, sans-serif;
-  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
-}
-@supports (font-variation-settings: normal) {
-  :root { font-family: InterVariable, sans-serif; }
-}
-
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -35,7 +27,7 @@ body {
 } */
 
 .footer{
-  @apply bg-transparent w-full fixed bottom-8
+  @apply w-full fixed bottom-8
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -60,7 +52,7 @@ body {
 }
 
 .navInActive{
-  @apply text-4xl font-normal text-neutral-300 transition ease-in-out hover:text-black hover:font-bold 
+  @apply text-4xl font-normal text-neutral-400 transition ease-in-out hover:text-black hover:font-bold 
 }
 
 .subNavActive{
@@ -68,5 +60,13 @@ body {
 }
 
 .subNavInActive{
-  @apply text-2xl font-normal text-neutral-300 transition ease-in-out hover:text-black hover:font-bold 
+  @apply text-2xl font-normal text-neutral-400 transition ease-in-out hover:text-black hover:font-bold 
+}
+
+.socials{
+  @apply text-base text-neutral-400 transition ease-in-out hover:text-black
+}
+
+.titlePlatform{
+  @apply font-bold
 }

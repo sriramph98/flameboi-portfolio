@@ -1,6 +1,5 @@
 import { FadeIn, SlideInBottom } from './animations/animation';
 import NavBar from './components/navbar';
-import SubNav from './components/subNav';
 import Music from './music';
 import Head from 'next/head';
 
@@ -19,20 +18,20 @@ export default function Home() {
           <h1 className='bio'>Independant Creative Artist</h1>
         </div>
 
-        <div className='flex-grow space-y-4'>
-          <NavBar/>
-          <SubNav/>
-        </div>
+        <div className='space-y-4'>  <NavBar/>
+        
+        
 
         <div className='flex-grow'><Music/></div>
-
-        <footer className='flex justify-between items-center'>
-          <div>
-            <a href="https://www.instagram.com" className="inline-block mr-4">Instagram</a>
-            <a href="https://www.spotify.com" className="inline-block mr-4">Spotify</a>
-            <a href="https://www.youtube.com" className="inline-block mr-4">YouTube</a>
-            <a href="https://www.discord.com" className="inline-block mr-4">Discord</a>
-            <a href="https://www.apple.com/music" className="inline-block mr-4">Apple Music</a>
+</div>
+        
+        <footer className='flex  justify-between '>
+          <div className='space-x-4'>
+            <a href="https://www.instagram.com" className="socials">Instagram</a>
+            <a href="https://www.spotify.com" className="socials">Spotify</a>
+            <a href="https://www.youtube.com" className="socials">YouTube</a>
+            <a href="https://www.discord.com" className="socials">Discord</a>
+            <a href="https://www.apple.com/music" className="socials">Apple Music</a>
           </div>
           <p>designed by sriramph</p>
         </footer>
