@@ -9,6 +9,7 @@ interface WorkItem {
   platform: string;
   link: string;
   image?: string;
+  streamingOptions?: Array<{ platform: string; url: string; }>;
 }
 
 interface AirtableRecord {
@@ -43,17 +44,37 @@ async function getWorkItems(category: string): Promise<WorkItem[]> {
   }).all();
 
   return records.map((record: AirtableRecord) => {
-    let link = record.get('Link') || '#';
-    if (link !== '#' && !link.startsWith('http://') && !link.startsWith('https://')) {
-      link = `https://${link}`;
-    }
+    const streamingOptions = [
+      {
+        platform: 'Spotify',
+        url: record.get('Spotify') || '#'
+      },
+      {
+        platform: 'Apple Music',
+        url: record.get('Apple Music') || '#'
+      },
+      {
+        platform: 'YouTube',
+        url: record.get('YouTube') || '#'
+      },
+      {
+        platform: 'SoundCloud',
+        url: record.get('Sound Cloud') || '#'
+      },
+      {
+        platform: 'Amazon Music',
+        url: record.get('Amazon Music') || '#'
+      }
+   
+    ].filter(option => option.url !== '#');
 
     return {
       title: record.get('Title'),
       description: record.get('Description'),
       platform: record.get('Platform'),
-      link: link,
-      image: record.get('Image')?.[0]?.url
+      link: record.get('Link') || '#',
+      image: record.get('Image')?.[0]?.url,
+      streamingOptions
     };
   });
 }
@@ -77,15 +98,19 @@ export default async function CategoryPage({
   return (
     <PageTransition>
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 overflow-x-auto hide-scrollbar">
           {items.length > 0 ? (
             items.map((item, index) => (
               <Card
                 key={index}
                 title={item.title}
-                subtitle={`${item.description || ''} • ${item.platform}`}
+                subtitle={item.description || ''}
                 href={item.link}
                 image={item.image}
+                className="h-full flex-shrink-0 w-[calc(100vw-2rem)] sm:w-[calc(100vw-4rem)] md:w-auto"
+                isSquare={true}
+                showListenButton={params.category !== 'editing'}
+                streamingOptions={item.streamingOptions}
               />
             ))
           ) : (

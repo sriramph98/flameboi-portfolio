@@ -28,7 +28,7 @@ body {
 } */
 
 .footer {
-  @apply w-full fixed bottom-8;
+  @apply w-full;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

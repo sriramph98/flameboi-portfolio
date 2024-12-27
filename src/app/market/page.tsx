@@ -1,5 +1,6 @@
-import { Container } from '../components/ui/Container';
-import { PageTransition } from '../components/ui/PageTransition';
+import { Card } from '@/app/components/ui/Card';
+import { Container } from '@/app/components/ui/Container';
+import { PageTransition } from '@/app/components/ui/PageTransition';
 
 // Add interface for market items
 interface MarketItem {
@@ -56,39 +57,18 @@ export default async function MarketPage() {
   return (
     <PageTransition>
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 overflow-x-auto hide-scrollbar">
           {marketItems.length > 0 ? (
             marketItems.map((item: MarketItem) => (
-              <a
+              <Card
                 key={item.id}
+                title={item.title}
+                subtitle={`${item.description} • ${item.price}`}
                 href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block group cursor-pointer"
-              >
-                <div className="aspect-square w-full bg-neutral-100 mb-4">
-                  {item.image ? (
-                    <img 
-                      src={item.image} 
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      Image
-                    </div>
-                  )}
-                </div>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
-                      {item.title}
-                    </h3>
-                    <p className="text-neutral-500 mt-1">{item.description}</p>
-                  </div>
-                  <span className="text-neutral-500">${item.price}</span>
-                </div>
-              </a>
+                image={item.image}
+                className="h-full flex-shrink-0 w-[calc(100vw-2rem)] sm:w-[calc(100vw-4rem)] md:w-auto"
+                isSquare={true}
+              />
             ))
           ) : (
             <div className="col-span-full flex items-center justify-center h-64">
