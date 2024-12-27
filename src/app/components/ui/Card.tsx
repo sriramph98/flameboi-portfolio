@@ -1,24 +1,46 @@
 'use client'
-import { motion } from 'framer-motion'
 
 interface CardProps {
-  children: React.ReactNode
-  className?: string
+  title: string;
+  subtitle?: string;
+  href: string;
+  image?: string;
 }
 
-export function Card({ children, className = '' }: CardProps) {
+export function Card({ title, subtitle, href, image }: CardProps) {
+  let formattedHref = href || '#';
+  if (formattedHref !== '#' && !formattedHref.startsWith('http://') && !formattedHref.startsWith('https://')) {
+    formattedHref = `https://${formattedHref}`;
+  }
+
   return (
-    <motion.div 
-      className={`inline-flex items-center justify-center p-8 bg-cardBG rounded-lg ${className}`}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ 
-        scale: 1.02,
-        transition: { duration: 0.2 }
-      }}
+    <a
+      href={formattedHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group cursor-pointer"
     >
-      {children}
-    </motion.div>
-  )
+      <div className="aspect-square w-full bg-neutral-100 mb-4">
+        {image ? (
+          <img 
+            src={image} 
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            Image
+          </div>
+        )}
+      </div>
+      <div>
+        <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
+          {title}
+        </h3>
+        {subtitle && (
+          <p className="text-neutral-500 mt-1">{subtitle}</p>
+        )}
+      </div>
+    </a>
+  );
 } 
