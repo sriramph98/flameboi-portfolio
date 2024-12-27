@@ -1,7 +1,6 @@
 import { getTracksByCategory } from '@/lib/airtable';
 import { notFound } from 'next/navigation';
 import TrackList from '../../components/TrackList';
-import { Container } from '../../components/ui/Container';
 import { PageTransition } from '../../components/ui/PageTransition';
 
 // Validate category
@@ -18,19 +17,24 @@ export default async function WorkCategoryPage({
     notFound();
   }
 
-  const tracks = await getTracksByCategory(params.category);
+  try {
+    const tracks = await getTracksByCategory(params.category);
+    
+    if (!tracks || tracks.length === 0) {
+      console.log('No tracks found or error occurred');
+      // Handle empty state
+      return <div>No tracks found</div>;
+    }
 
-  const content = tracks.length > 0 ? (
-    <TrackList tracks={tracks} />
-  ) : (
-    <Container>
-      <div className="flex items-center justify-center h-full">
-        <h2 className="text-2xl">No tracks available</h2>
-      </div>
-    </Container>
-  );
+    const content = (
+      <TrackList tracks={tracks} />
+    );
 
-  return <PageTransition>{content}</PageTransition>;
+    return <PageTransition>{content}</PageTransition>;
+  } catch (error) {
+    console.error('Error fetching tracks:', error);
+    return <div>Error loading tracks</div>;
+  }
 }
 
 export function generateStaticParams() {
