@@ -12,7 +12,7 @@ interface TrackProps {
 export function Track({ trackName, artistName, platform, imageUrl }: TrackProps) {
   return (
     <div className='flex-shrink-0 space-y-2'>
-      <Card className='aspect-square w-[calc(min(60vh,24rem))]'>
+      <Card className='aspect-square w-[calc(min(50vh,24rem))]'>
         <Image 
           className='object-contain'
           src={imageUrl}

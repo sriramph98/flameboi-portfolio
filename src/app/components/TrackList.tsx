@@ -16,7 +16,7 @@ interface TrackListProps {
 export default function TrackList({ tracks }: TrackListProps) {
   return (
     <section 
-      className='flex overflow-x-auto hide-scrollbar gap-4 sm:gap-6 md:gap-8' 
+      className='flex overflow-x-auto hide-scrollbar gap-4 sm:gap-6 md:gap-8 h-full items-center' 
       aria-label="Track list"
     >
       {tracks.map((item) => (

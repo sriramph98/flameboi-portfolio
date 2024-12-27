@@ -19,16 +19,16 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <div className='flex flex-col min-h-screen p-4 sm:p-6 md:p-8'>
-          <header className='flex-none'>
-            <h1 className='logo'>FLAMEBOI</h1>
-            <h1 className='bio'>Independant Creative Artist</h1>
+          <header className='flex-none space-y-4'>
+            <div>
+              <h1 className='logo'>FLAMEBOI</h1>
+              <h1 className='bio'>Independant Creative Artist</h1>
+            </div>
+            <NavBar/>
           </header>
 
-          <main className='flex-1 flex flex-col justify-center'>
-            <div className='space-y-8'>
-              <NavBar/>
-              {children}
-            </div>
+          <main className='flex-1 flex flex-col'>
+            {children}
           </main>
 
           <footer className='flex-none flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0'>
