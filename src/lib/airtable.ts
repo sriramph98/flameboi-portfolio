@@ -1,5 +1,13 @@
 import Airtable from "airtable";
 
+// Add debug logging
+console.log("Airtable Environment Check:", {
+  hasKey: !!process.env.AIRTABLE_API_KEY,
+  hasBaseId: !!process.env.AIRTABLE_BASE_ID,
+  keyPrefix: process.env.AIRTABLE_API_KEY?.slice(0, 5),
+  baseIdPrefix: process.env.AIRTABLE_BASE_ID?.slice(0, 5),
+});
+
 if (!process.env.AIRTABLE_API_KEY) {
   throw new Error("AIRTABLE_API_KEY is not defined");
 }
