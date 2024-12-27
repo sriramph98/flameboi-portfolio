@@ -17,6 +17,7 @@
 }
 
 body {
+  font-family: 'Inter', sans-serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -26,8 +27,8 @@ body {
     rgb(var(--background-start-rgb));
 } */
 
-.footer{
-  @apply w-full fixed bottom-8
+.footer {
+  @apply w-full fixed bottom-8;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -35,38 +36,38 @@ body {
 }
 
 .hide-scrollbar {
-  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-  scrollbar-width: none;  /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
 }
 
-.logo{
-  @apply text-2xl font-extrabold leading-normal
+.logo {
+  @apply text-xl sm:text-2xl font-extrabold leading-normal;
 }
 
-.bio{
-  @apply text-xl font-normal leading-normal
+.bio {
+  @apply text-lg sm:text-xl font-normal leading-normal;
 }
 
-.navActive{
-  @apply text-4xl font-bold 
+.navActive {
+  @apply text-2xl sm:text-3xl md:text-4xl;
 }
 
-.navInActive{
-  @apply text-4xl font-normal text-neutral-400 transition ease-in-out hover:text-black hover:font-bold 
+.navInActive {
+  @apply text-2xl sm:text-3xl md:text-4xl font-normal text-neutral-400 transition ease-in-out hover:text-black;
 }
 
-.subNavActive{
-  @apply text-2xl font-bold 
+.subNavActive {
+  @apply text-xl sm:text-2xl;
 }
 
-.subNavInActive{
-  @apply text-2xl font-normal text-neutral-400 transition ease-in-out hover:text-black hover:font-bold 
+.subNavInActive {
+  @apply text-xl sm:text-2xl font-normal text-neutral-400 transition ease-in-out hover:text-black;
 }
 
-.socials{
-  @apply text-base text-neutral-400 transition ease-in-out hover:text-black
+.socials {
+  @apply text-sm sm:text-base text-neutral-400 transition ease-in-out hover:text-black;
 }
 
-.titlePlatform{
-  @apply font-bold
+.titlePlatform {
+  @apply font-bold;
 }

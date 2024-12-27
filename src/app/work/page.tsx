@@ -1,20 +1,5 @@
-import Link from 'next/link';
-import WorkNav from '../components/workNav';
+import { redirect } from 'next/navigation'
 
-export default function Work({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-
-  return (
-    <>
-
-  <div className='space-y-4'><WorkNav/></div>
-<div>{children}</div>
-
-
-    
-    </>
-  );
+export default function WorkPage() {
+    redirect('/work/music')
 }

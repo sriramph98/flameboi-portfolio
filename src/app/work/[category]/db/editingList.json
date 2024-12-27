@@ -1,0 +1,9 @@
+[
+    {
+        "id": "1",
+        "trackName": "Edit Project 1",
+        "artistName": "Artist Name",
+        "platform": "YouTube",
+        "imageUrl": "/path/to/image.jpg"
+    }
+]

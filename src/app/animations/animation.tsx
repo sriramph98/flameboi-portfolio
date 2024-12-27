@@ -1,4 +1,4 @@
-
+'use client'
 import { motion } from "framer-motion";
 
 // The initial and animate properties define the animation states

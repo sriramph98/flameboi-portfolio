@@ -1,0 +1,9 @@
+[
+    {
+        "id": "1",
+        "trackName": "Mix Project 1",
+        "artistName": "Artist Name",
+        "platform": "Spotify",
+        "imageUrl": "/path/to/image.jpg"
+    }
+]
