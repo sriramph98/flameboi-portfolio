@@ -5,9 +5,18 @@ interface CardProps {
   subtitle?: string;
   href: string;
   image?: string;
+  children?: React.ReactNode;
+  className?: string;
 }
 
-export function Card({ title, subtitle, href, image }: CardProps) {
+export function Card({ 
+  title, 
+  subtitle, 
+  href, 
+  image,
+  children,
+  className = ''
+}: CardProps) {
   let formattedHref = href || '#';
   if (formattedHref !== '#' && !formattedHref.startsWith('http://') && !formattedHref.startsWith('https://')) {
     formattedHref = `https://${formattedHref}`;
@@ -18,21 +27,23 @@ export function Card({ title, subtitle, href, image }: CardProps) {
       href={formattedHref}
       target="_blank"
       rel="noopener noreferrer"
-      className="group cursor-pointer"
+      className={`block group cursor-pointer ${className}`}
     >
-      <div className="aspect-square w-full bg-neutral-100 mb-4">
-        {image ? (
-          <img 
-            src={image} 
-            alt={title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            Image
-          </div>
-        )}
-      </div>
+      {children ? children : (
+        <div className="aspect-square w-full bg-neutral-100 mb-4">
+          {image ? (
+            <img 
+              src={image} 
+              alt={title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              Image
+            </div>
+          )}
+        </div>
+      )}
       <div>
         <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
           {title}

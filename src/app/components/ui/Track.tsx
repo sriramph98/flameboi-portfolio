@@ -17,14 +17,17 @@ export function Track({ trackName, artistName, platform, imageUrl }: TrackProps)
 
   return (
     <div className='flex-shrink-0 space-y-1'>
-      <Card className='aspect-square w-[calc(min(45vh,24rem))]'>
+      <Card 
+        title={trackName}
+        href="#"
+        className='aspect-square w-[calc(min(45vh,24rem))]'
+      >
         <Image 
           className='object-contain'
           src={imageUrl}
-          width={1024}
-          height={1024}
-          alt={`${trackName} by ${artistName}`}
-          priority
+          alt={trackName}
+          width={400}
+          height={400}
         />
       </Card>
       <TrackInfo 
