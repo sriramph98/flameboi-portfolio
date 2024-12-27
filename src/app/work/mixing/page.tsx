@@ -1,12 +1,5 @@
-export default function Mixing() {
+import CategoryPage from '../[category]/page'
 
-  return (
-    <>
-   
-   
-<div>mixing</div>
-      
-
-    </>
-  );
+export default function MixingPage() {
+  return <CategoryPage params={{ category: 'mixing' }} />
 }

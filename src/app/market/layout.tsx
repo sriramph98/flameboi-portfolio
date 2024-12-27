@@ -1,13 +1,12 @@
 import { BaseLayout } from '../components/layouts/BaseLayout'
-import WorkNav from '../components/workNav'
 
-export default function WorkLayout({
+export default function MarketLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
     return (
-        <BaseLayout nav={<WorkNav />}>
+        <BaseLayout>
             {children}
         </BaseLayout>
     )

@@ -6,7 +6,7 @@ interface TrackData {
   trackName: string
   artistName: string
   platform: string
-  imageUrl: string
+  imageUrl: string | null
 }
 
 interface TrackListProps {
@@ -16,18 +16,24 @@ interface TrackListProps {
 export default function TrackList({ tracks }: TrackListProps) {
   return (
     <section 
-      className='flex overflow-x-auto hide-scrollbar gap-4 sm:gap-6 md:gap-8 h-full items-center' 
+      className='h-full flex overflow-x-auto hide-scrollbar'
       aria-label="Track list"
     >
-      {tracks.map((item) => (
-        <Track
-          key={item.id}
-          trackName={item.trackName}
-          artistName={item.artistName}
-          platform={item.platform}
-          imageUrl={item.imageUrl}
-        />
-      ))}
+      <div className='flex min-w-full px-4 sm:px-6 md:px-8 sm:gap-6 md:gap-8 items-center'>
+        {tracks.map((item) => (
+          <div 
+            key={item.id} 
+            className='max-sm:flex-none max-sm:w-full max-sm:h-full max-sm:flex max-sm:items-center max-sm:justify-center max-sm:snap-center'
+          >
+            <Track
+              trackName={item.trackName}
+              artistName={item.artistName}
+              platform={item.platform}
+              imageUrl={item.imageUrl}
+            />
+          </div>
+        ))}
+      </div>
     </section>
   )
 } 

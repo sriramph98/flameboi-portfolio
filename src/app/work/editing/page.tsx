@@ -1,15 +1,5 @@
+import CategoryPage from '../[category]/page'
 
-
-
-export default function Editing() {
-
-  return (
-    <>
-   
-   
-<div>editing</div>
-      
-
-    </>
-  );
+export default function EditingPage() {
+  return <CategoryPage params={{ category: 'editing' }} />
 }

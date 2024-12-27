@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation'
+import CategoryPage from './[category]/page'
 
 export default function WorkPage() {
-    redirect('/work/music')
+  return <CategoryPage params={{ category: 'music' }} />
 }
