@@ -81,3 +81,7 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
+
+.animation-play-state-paused {
+  animation-play-state: paused;
+}

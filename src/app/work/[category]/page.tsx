@@ -106,9 +106,9 @@ export default async function CategoryPage({
 
   return (
     <PageTransition>
-      <div className="w-full">
+      <div className="flex-1 flex flex-col">
         <Container>
-          <div className="flex gap-4 overflow-x-auto hide-scrollbar">
+          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory h-[calc(100vh-160px)] items-center gap-6">
             {items.length > 0 ? (
               items.map((item, index) => (
                 <Card
@@ -117,7 +117,7 @@ export default async function CategoryPage({
                   subtitle={item.description || ''}
                   href={item.link}
                   image={item.image}
-                  className="w-[280px] flex-shrink-0"
+                  className="w-full md:w-[280px] flex-shrink-0 snap-center first:ml-6 last:mr-6 md:first:ml-0 md:last:mr-0"
                   isSquare={true}
                   showListenButton={params.category !== 'editing'}
                   streamingOptions={item.streamingOptions}

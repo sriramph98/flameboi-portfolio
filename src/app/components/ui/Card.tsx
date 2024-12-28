@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StreamingMenu } from './StreamingMenu';
 
 interface CardProps {
@@ -28,15 +28,23 @@ export function Card({
   streamingOptions = []
 }: CardProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      setShouldScroll(titleRef.current.scrollWidth > titleRef.current.clientWidth);
+    }
+  }, [title]);
 
   return (
-    <div className={`block ${className}`}>
+    <div className={`flex flex-col items-center mx-auto max-w-[400px] ${className}`}>
       {children ? children : (
         <a
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="block group cursor-pointer"
+          className="flex-1 group cursor-pointer w-full"
         >
           <div className={`${isSquare ? 'aspect-square' : 'aspect-video'} w-full bg-neutral-100 mb-2 rounded-lg overflow-hidden`}>
             {image ? (
@@ -55,23 +63,28 @@ export function Card({
           </div>
         </a>
       )}
-      <div className="p-2">
+      <div className="p-2 w-full">
         <div className="flex justify-between items-start">
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="block group cursor-pointer"
+            className="block group cursor-pointer overflow-hidden flex-1"
           >
-            <h3 className="text-xl font-semibold group-hover:opacity-70 transition-opacity">
+            <h3 
+              ref={titleRef}
+              className={`text-xl font-semibold group-hover:opacity-70 transition-opacity whitespace-nowrap ${
+                shouldScroll ? 'animate-scroll-text hover:animation-play-state-paused' : ''
+              }`}
+            >
               {title}
             </h3>
             {subtitle && (
-              <p className="text-neutral-500 mt-2 text-sm line-clamp-2 font-normal">{subtitle}</p>
+              <p className="text-neutral-500 mt-2 text-sm line-clamp-2 font-normal w-full">{subtitle}</p>
             )}
           </a>
           {showListenButton && (
-            <div className="relative ml-4">
+            <div className="relative ml-4 flex-shrink-0">
               <button
                 onClick={(e) => {
                   e.preventDefault();

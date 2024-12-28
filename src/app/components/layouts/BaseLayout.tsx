@@ -17,9 +17,9 @@ interface BaseLayoutProps {
 
 export function BaseLayout({ children, nav }: BaseLayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col overflow-hidden">
       <Container>
-        <header className='flex-none mb-12'>
+        <header className='flex-none shrink-0 py-4'>
           <div className="flex justify-between items-start mb-4">
             <div>
               <h1 className={`logo ${unbounded.className}`}>FLAMEBOI</h1>
@@ -39,7 +39,7 @@ export function BaseLayout({ children, nav }: BaseLayoutProps) {
         </header>
       </Container>
 
-      <main>
+      <main className="flex-1 flex flex-col overflow-hidden">
         {children}
       </main>
     </div>

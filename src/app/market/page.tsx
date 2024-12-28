@@ -64,9 +64,9 @@ export default async function MarketPage() {
 
   return (
     <PageTransition>
-      <div className="w-full">
+      <div className="flex-1 flex flex-col">
         <Container>
-          <div className="flex gap-4 overflow-x-auto hide-scrollbar">
+          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory h-[calc(100vh-160px)] items-center gap-6">
             {marketItems.length > 0 ? (
               marketItems.map((item: MarketItem) => (
                 <Card
@@ -75,7 +75,7 @@ export default async function MarketPage() {
                   subtitle={`${item.description} • ${item.price}`}
                   href={item.link}
                   image={item.image}
-                  className="w-[280px] flex-shrink-0"
+                  className="w-full md:w-[280px] flex-shrink-0 snap-center first:ml-6 last:mr-6 md:first:ml-0 md:last:mr-0"
                   isSquare={true}
                 />
               ))
