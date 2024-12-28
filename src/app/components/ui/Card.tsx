@@ -30,13 +30,13 @@ export function Card({
 
   return (
     <div className={`block ${className}`}>
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block group cursor-pointer"
-      >
-        {children ? children : (
+      {children ? children : (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block group cursor-pointer"
+        >
           <div className={`${isSquare ? 'aspect-square' : 'aspect-video'} w-full bg-neutral-100 mb-2 rounded-lg overflow-hidden`}>
             {image ? (
               <img 
@@ -50,38 +50,43 @@ export function Card({
               </div>
             )}
           </div>
-        )}
-        <div className="p-2">
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
-                {title}
-              </h3>
-              {subtitle && (
-                <p className="text-neutral-500 mt-2 text-sm line-clamp-2">{subtitle}</p>
-              )}
-            </div>
-            {showListenButton && (
-              <div className="relative ml-4">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setIsMenuOpen(true);
-                  }}
-                  className="inline-block px-6 py-2 rounded-full bg-neutral-100 text-black font-medium hover:bg-neutral-200 transition-colors"
-                >
-                  Listen Now
-                </button>
-                <StreamingMenu
-                  isOpen={isMenuOpen}
-                  onClose={() => setIsMenuOpen(false)}
-                  options={streamingOptions}
-                />
-              </div>
+        </a>
+      )}
+      <div className="p-2">
+        <div className="flex justify-between items-start">
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block group cursor-pointer"
+          >
+            <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
+              {title}
+            </h3>
+            {subtitle && (
+              <p className="text-neutral-500 mt-2 text-sm line-clamp-2">{subtitle}</p>
             )}
-          </div>
+          </a>
+          {showListenButton && (
+            <div className="relative ml-4">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(true);
+                }}
+                className="inline-block px-6 py-2 rounded-full bg-neutral-100 text-black font-medium hover:bg-neutral-200 transition-colors"
+              >
+                Listen Now
+              </button>
+              <StreamingMenu
+                isOpen={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+                options={streamingOptions}
+              />
+            </div>
+          )}
         </div>
-      </a>
+      </div>
     </div>
   );
 } 
