@@ -1,4 +1,4 @@
-import { Card } from '@/app/components/ui/Card';
+import { CardList } from '@/app/components/ui/CardList';
 import { Container } from '@/app/components/ui/Container';
 import { PageTransition } from '@/app/components/ui/PageTransition';
 import { notFound } from 'next/navigation';
@@ -93,11 +93,7 @@ function isValidCategory(category: string): boolean {
 
 export const revalidate = 0
 
-export default async function CategoryPage({ 
-  params 
-}: { 
-  params: { category: string } 
-}) {
+export default async function CategoryPage({ params }: { params: { category: string } }) {
   if (!isValidCategory(params.category)) {
     notFound();
   }
@@ -108,29 +104,12 @@ export default async function CategoryPage({
     <PageTransition>
       <div className="flex-1 flex flex-col">
         <Container>
-          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory h-[calc(100vh-160px)] items-center gap-6">
-            {items.length > 0 ? (
-              items.map((item, index) => (
-                <Card
-                  key={index}
-                  title={item.title}
-                  subtitle={item.description || ''}
-                  href={item.link}
-                  image={item.image}
-                  className="w-full md:w-[280px] flex-shrink-0 snap-center first:ml-6 last:mr-6 md:first:ml-0 md:last:mr-0"
-                  isSquare={true}
-                  showListenButton={params.category !== 'editing'}
-                  streamingOptions={item.streamingOptions}
-                />
-              ))
-            ) : (
-              <div className="col-span-full flex items-center justify-center h-64">
-                <h2 className="text-2xl font-semibold">No items available</h2>
-              </div>
-            )}
-          </div>
+          <CardList 
+            items={items} 
+            showListenButton={params.category !== 'editing'} 
+          />
         </Container>
       </div>
     </PageTransition>
-  )
+  );
 } 
