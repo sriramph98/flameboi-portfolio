@@ -18,71 +18,78 @@ interface AirtableRecord {
 }
 
 async function getWorkItems(category: string): Promise<WorkItem[]> {
-  const Airtable = require('airtable');
-  
-  if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID) {
-    throw new Error('Missing Airtable environment variables');
-  }
+  try {
+    const Airtable = require('airtable');
+    
+    if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID) {
+      console.warn('Missing Airtable environment variables');
+      return [];
+    }
 
-  const base = new Airtable({
-    apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY
-  }).base(process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID);
+    const base = new Airtable({
+      apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY
+    }).base(process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID);
 
-  const tableMap: { [key: string]: string } = {
-    music: 'Music',
-    mixing: 'Mixing',
-    editing: 'Editing'
-  };
+    const tableMap: { [key: string]: string } = {
+      music: 'Music',
+      mixing: 'Mixing',
+      editing: 'Editing'
+    };
 
-  const tableName = tableMap[category];
-  if (!tableName) {
+    const tableName = tableMap[category];
+    if (!tableName) {
+      return [];
+    }
+
+    const records = await base(tableName).select({
+      view: 'Grid view'
+    }).all();
+
+    return records.map((record: AirtableRecord) => {
+      const streamingOptions = [
+        {
+          platform: 'Spotify',
+          url: `https://${record.get('Spotify')}` || '#'
+        },
+        {
+          platform: 'Apple Music',
+          url: `https://${record.get('Apple Music')}` || '#'
+        },
+        {
+          platform: 'YouTube',
+          url: `https://${record.get('YouTube')}` || '#'
+        },
+        {
+          platform: 'SoundCloud',
+          url: `https://${record.get('Sound Cloud')}` || '#'
+        },
+        {
+          platform: 'Amazon Music',
+          url: `https://${record.get('Amazon Music')}` || '#'
+        }
+      ].filter(option => option.url !== '#' && option.url !== 'https://undefined');
+
+      return {
+        title: record.get('Title'),
+        description: record.get('Description'),
+        platform: record.get('Platform'),
+        link: record.get('Link') || '#',
+        image: record.get('Image')?.[0]?.url,
+        streamingOptions
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching work items:', error);
     return [];
   }
-
-  const records = await base(tableName).select({
-    view: 'Grid view'
-  }).all();
-
-  return records.map((record: AirtableRecord) => {
-    const streamingOptions = [
-      {
-        platform: 'Spotify',
-        url: `https://${record.get('Spotify')}` || '#'
-      },
-      {
-        platform: 'Apple Music',
-        url: `https://${record.get('Apple Music')}` || '#'
-      },
-      {
-        platform: 'YouTube',
-        url: `https://${record.get('YouTube')}` || '#'
-      },
-      {
-        platform: 'SoundCloud',
-        url: `https://${record.get('Sound Cloud')}` || '#'
-      },
-      {
-        platform: 'Amazon Music',
-        url: `https://${record.get('Amazon Music')}` || '#'
-      }
-   
-    ].filter(option => option.url !== '#' && option.url !== 'https://undefined');
-
-    return {
-      title: record.get('Title'),
-      description: record.get('Description'),
-      platform: record.get('Platform'),
-      link: record.get('Link') || '#',
-      image: record.get('Image')?.[0]?.url,
-      streamingOptions
-    };
-  });
 }
 
 // Validate category
 function isValidCategory(category: string): boolean {
   return ['music', 'mixing', 'editing'].includes(category);
 }
+
+export const revalidate = 0
 
 export default async function CategoryPage({ 
   params 
@@ -122,12 +129,4 @@ export default async function CategoryPage({
       </Container>
     </PageTransition>
   )
-}
-
-export function generateStaticParams() {
-  return [
-    { category: 'music' },
-    { category: 'mixing' },
-    { category: 'editing' }
-  ]
 } 

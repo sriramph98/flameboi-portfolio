@@ -19,37 +19,45 @@ interface AirtableRecord {
 }
 
 async function getMarketData(): Promise<MarketItem[]> {
-  const Airtable = require('airtable');
-  
-  if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID) {
-    throw new Error('Missing Airtable environment variables');
-  }
-
-  const base = new Airtable({
-    apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY
-  }).base(process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID);
-
-  const records = await base('Market').select({
-    view: 'Grid view'
-  }).all();
-
-  return records.map((record: AirtableRecord) => {
-    let link = record.get('Link') || '#';
-    // Ensure the link starts with http:// or https://
-    if (link !== '#' && !link.startsWith('http://') && !link.startsWith('https://')) {
-      link = `https://${link}`;
+  try {
+    const Airtable = require('airtable');
+    
+    if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID) {
+      console.warn('Missing Airtable environment variables');
+      return [];
     }
 
-    return {
-      id: record.id,
-      title: record.get('Title'),
-      description: record.get('Description'),
-      price: record.get('Price'),
-      image: record.get('Image')?.[0]?.url,
-      link: link
-    };
-  });
+    const base = new Airtable({
+      apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY
+    }).base(process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID);
+
+    const records = await base('Market').select({
+      view: 'Grid view'
+    }).all();
+
+    return records.map((record: AirtableRecord) => {
+      let link = record.get('Link') || '#';
+      // Ensure the link starts with http:// or https://
+      if (link !== '#' && !link.startsWith('http://') && !link.startsWith('https://')) {
+        link = `https://${link}`;
+      }
+
+      return {
+        id: record.id,
+        title: record.get('Title'),
+        description: record.get('Description'),
+        price: record.get('Price'),
+        image: record.get('Image')?.[0]?.url,
+        link: link
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching market data:', error);
+    return [];
+  }
 }
+
+export const revalidate = 0
 
 export default async function MarketPage() {
   const marketItems = await getMarketData();

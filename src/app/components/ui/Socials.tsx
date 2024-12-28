@@ -10,26 +10,34 @@ interface AirtableRecord {
 }
 
 async function getSocials(): Promise<Social[]> {
-  const Airtable = require('airtable');
-  
-  if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID) {
-    throw new Error('Missing Airtable environment variables');
+  try {
+    const Airtable = require('airtable');
+    
+    if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID) {
+      console.warn('Missing Airtable environment variables');
+      return [];
+    }
+
+    const base = new Airtable({
+      apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY
+    }).base(process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID);
+
+    const records = await base('Socials').select({
+      view: 'Grid view'
+    }).all();
+
+    return records.map((record: AirtableRecord) => ({
+      id: record.id,
+      platform: record.get('Platform'),
+      url: record.get('URL')
+    }));
+  } catch (error) {
+    console.error('Error fetching socials:', error);
+    return [];
   }
-
-  const base = new Airtable({
-    apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY
-  }).base(process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID);
-
-  const records = await base('Socials').select({
-    view: 'Grid view'
-  }).all();
-
-  return records.map((record: AirtableRecord) => ({
-    id: record.id,
-    platform: record.get('Platform'),
-    url: record.get('URL')
-  }));
 }
+
+export const revalidate = 0
 
 export async function Socials() {
   const socials = await getSocials();

@@ -6,7 +6,8 @@ const nextConfig = {
   },
   images: {
     domains: ['v5.airtableusercontent.com', 'dl.airtable.com'],
-  }
+  },
+  output: 'standalone'
 }
 
 module.exports = nextConfig
