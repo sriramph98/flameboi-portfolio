@@ -22,7 +22,7 @@ async function getMarketData(): Promise<MarketItem[]> {
   try {
     const Airtable = require('airtable');
     
-    if (!process.env.AIRTABLE_API_KEY || !process.env._AIRTABLE_BASE_ID) {
+    if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
       console.warn('Missing Airtable environment variables');
       return [];
     }

@@ -61,27 +61,27 @@ export function Card({
                 <p className="text-neutral-500 mt-2 text-sm line-clamp-2">{subtitle}</p>
               )}
             </div>
+            {showListenButton && (
+              <div className="relative ml-4">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMenuOpen(true);
+                  }}
+                  className="inline-block px-6 py-2 rounded-full bg-neutral-100 text-black font-medium hover:bg-neutral-200 transition-colors"
+                >
+                  Listen Now
+                </button>
+                <StreamingMenu
+                  isOpen={isMenuOpen}
+                  onClose={() => setIsMenuOpen(false)}
+                  options={streamingOptions}
+                />
+              </div>
+            )}
           </div>
         </div>
       </a>
-      {showListenButton && (
-        <div className="relative ml-4">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setIsMenuOpen(true);
-            }}
-            className="inline-block px-6 py-2 rounded-full bg-neutral-100 text-black font-medium hover:bg-neutral-200 transition-colors"
-          >
-            Listen Now
-          </button>
-          <StreamingMenu
-            isOpen={isMenuOpen}
-            onClose={() => setIsMenuOpen(false)}
-            options={streamingOptions}
-          />
-        </div>
-      )}
     </div>
   );
 } 
