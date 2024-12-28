@@ -37,7 +37,10 @@ export function StreamingMenu({ isOpen, onClose, options }: StreamingMenuProps) 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose();
+            }}
             className="fixed inset-0 bg-black/50 z-40"
           />
           
@@ -57,7 +60,13 @@ export function StreamingMenu({ isOpen, onClose, options }: StreamingMenuProps) 
                     href={option.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 w-full p-3 rounded-full hover:bg-neutral-100 transition-colors"
+                    className="block w-full p-3 rounded-full hover:bg-neutral-100 transition-colors flex items-center gap-3"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      const url = option.url.startsWith('http') ? option.url : `https://${option.url}`;
+                      window.open(url, '_blank', 'noopener,noreferrer');
+                    }}
                   >
                     {Icon && <Icon className="text-xl" />}
                     {option.platform}

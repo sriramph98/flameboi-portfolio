@@ -47,26 +47,26 @@ async function getWorkItems(category: string): Promise<WorkItem[]> {
     const streamingOptions = [
       {
         platform: 'Spotify',
-        url: record.get('Spotify') || '#'
+        url: `https://${record.get('Spotify')}` || '#'
       },
       {
         platform: 'Apple Music',
-        url: record.get('Apple Music') || '#'
+        url: `https://${record.get('Apple Music')}` || '#'
       },
       {
         platform: 'YouTube',
-        url: record.get('YouTube') || '#'
+        url: `https://${record.get('YouTube')}` || '#'
       },
       {
         platform: 'SoundCloud',
-        url: record.get('Sound Cloud') || '#'
+        url: `https://${record.get('Sound Cloud')}` || '#'
       },
       {
         platform: 'Amazon Music',
-        url: record.get('Amazon Music') || '#'
+        url: `https://${record.get('Amazon Music')}` || '#'
       }
    
-    ].filter(option => option.url !== '#');
+    ].filter(option => option.url !== '#' && option.url !== 'https://undefined');
 
     return {
       title: record.get('Title'),
