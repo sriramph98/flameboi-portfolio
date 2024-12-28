@@ -1,20 +1,31 @@
 import type { Metadata } from 'next'
-import { Inter_Tight, Unbounded } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const interTight = Inter_Tight({ 
-  subsets: ['latin'],
-  display: 'swap',
-})
-
-const unbounded = Unbounded({ 
-  subsets: ['latin'],
-  display: 'swap',
+const satoshi = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Satoshi/Satoshi-Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Satoshi/Satoshi-Medium.otf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Satoshi/Satoshi-Bold.otf',
+      weight: '700',
+      style: 'normal',
+    }
+  ],
+  variable: '--font-satoshi'
 })
 
 export const metadata: Metadata = {
   title: 'Flameboi',
-  description: 'Independant Creative Artist',
+  description: 'Independent Creative Artist',
 }
 
 export default function RootLayout({
@@ -24,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={interTight.className}>
+      <body className={`${satoshi.variable} font-sans`}>
         <div className='flex flex-col min-h-screen p-4 sm:p-6 md:p-8'>
           {children}
         </div>

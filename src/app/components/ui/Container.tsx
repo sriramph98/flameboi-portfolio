@@ -4,7 +4,7 @@ interface ContainerProps {
 
 export function Container({ children }: ContainerProps) {
   return (
-    <div className="px-4 sm:px-6 md:px-8">
+    <div className="w-full">
       {children}
     </div>
   )

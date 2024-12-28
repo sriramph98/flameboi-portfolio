@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { StreamingMenu } from './StreamingMenu';
 
@@ -39,9 +40,11 @@ export function Card({
         >
           <div className={`${isSquare ? 'aspect-square' : 'aspect-video'} w-full bg-neutral-100 mb-2 rounded-lg overflow-hidden`}>
             {image ? (
-              <img 
+              <Image 
                 src={image} 
                 alt={title}
+                width={500}
+                height={500}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
               />
             ) : (
@@ -60,11 +63,11 @@ export function Card({
             rel="noopener noreferrer"
             className="block group cursor-pointer"
           >
-            <h3 className="text-xl font-medium group-hover:opacity-70 transition-opacity">
+            <h3 className="text-xl font-semibold group-hover:opacity-70 transition-opacity">
               {title}
             </h3>
             {subtitle && (
-              <p className="text-neutral-500 mt-2 text-sm line-clamp-2">{subtitle}</p>
+              <p className="text-neutral-500 mt-2 text-sm line-clamp-2 font-normal">{subtitle}</p>
             )}
           </a>
           {showListenButton && (

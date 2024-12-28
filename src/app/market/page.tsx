@@ -64,27 +64,29 @@ export default async function MarketPage() {
 
   return (
     <PageTransition>
-      <Container>
-        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 overflow-x-auto hide-scrollbar">
-          {marketItems.length > 0 ? (
-            marketItems.map((item: MarketItem) => (
-              <Card
-                key={item.id}
-                title={item.title}
-                subtitle={`${item.description} • ${item.price}`}
-                href={item.link}
-                image={item.image}
-                className="h-full flex-shrink-0 w-[calc(100vw-2rem)] sm:w-[calc(100vw-4rem)] md:w-auto"
-                isSquare={true}
-              />
-            ))
-          ) : (
-            <div className="col-span-full flex items-center justify-center h-64">
-              <h2 className="text-2xl">No items available</h2>
-            </div>
-          )}
-        </div>
-      </Container>
+      <div className="w-full">
+        <Container>
+          <div className="flex gap-4 overflow-x-auto hide-scrollbar">
+            {marketItems.length > 0 ? (
+              marketItems.map((item: MarketItem) => (
+                <Card
+                  key={item.id}
+                  title={item.title}
+                  subtitle={`${item.description} • ${item.price}`}
+                  href={item.link}
+                  image={item.image}
+                  className="w-[280px] flex-shrink-0"
+                  isSquare={true}
+                />
+              ))
+            ) : (
+              <div className="col-span-full flex items-center justify-center h-64">
+                <h2 className="text-2xl font-semibold">No items available</h2>
+              </div>
+            )}
+          </div>
+        </Container>
+      </div>
     </PageTransition>
   )
 }

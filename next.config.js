@@ -5,7 +5,12 @@ const nextConfig = {
     AIRTABLE_BASE_ID: process.env.AIRTABLE_BASE_ID,
   },
   images: {
-    domains: ['v5.airtableusercontent.com', 'dl.airtable.com'],
+    domains: [
+      'v5.airtableusercontent.com', 
+      'dl.airtable.com',
+      'airtable.com',
+      'v5.airtablusercontent.com'
+    ],
   },
   output: 'standalone'
 }

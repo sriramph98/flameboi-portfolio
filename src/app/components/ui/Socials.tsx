@@ -39,11 +39,11 @@ async function getSocials(): Promise<Social[]> {
 
 export const revalidate = 0
 
-export async function Socials() {
+export async function Socials({ className = '' }: { className?: string }) {
   const socials = await getSocials();
 
   return (
-    <div className='flex flex-wrap gap-4'>
+    <div className={`flex flex-wrap gap-4 ${className}`}>
       {socials.map((social) => (
         <a
           key={social.id}
