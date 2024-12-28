@@ -21,13 +21,13 @@ interface AirtableRecord {
 async function getMarketData(): Promise<MarketItem[]> {
   const Airtable = require('airtable');
   
-  if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
+  if (!process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || !process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID) {
     throw new Error('Missing Airtable environment variables');
   }
 
   const base = new Airtable({
-    apiKey: process.env.AIRTABLE_API_KEY
-  }).base(process.env.AIRTABLE_BASE_ID);
+    apiKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY
+  }).base(process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID);
 
   const records = await base('Market').select({
     view: 'Grid view'
