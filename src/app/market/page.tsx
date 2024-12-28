@@ -1,4 +1,3 @@
-'use client'
 import { CardList } from '@/app/components/ui/CardList';
 import { Container } from '@/app/components/ui/Container';
 import { PageTransition } from '@/app/components/ui/PageTransition';
@@ -58,7 +57,7 @@ async function getMarketData(): Promise<MarketItem[]> {
   }
 }
 
-export const revalidate = 0
+export const revalidate = false
 
 export default async function MarketPage() {
   const marketItems = await getMarketData();
