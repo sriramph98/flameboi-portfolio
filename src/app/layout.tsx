@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${satoshi.variable} font-sans`}>
-        <div className='flex flex-col min-h-screen p-4 sm:p-6 md:p-8'>
+        <div className='flex flex-col min-h-screen'>
           {children}
         </div>
         <SpeedInsights />

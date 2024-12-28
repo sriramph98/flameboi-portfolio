@@ -39,7 +39,7 @@ export function BaseLayout({ children, nav }: BaseLayoutProps) {
         </header>
       </Container>
 
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden -mx-4 sm:-mx-6 md:-mx-8">
         {children}
       </main>
     </div>

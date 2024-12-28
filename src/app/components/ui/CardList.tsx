@@ -19,7 +19,7 @@ export function CardList({ items, showListenButton }: CardListProps) {
   return (
     <>
       <div 
-        className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory h-[calc(100vh-160px)] items-center gap-6"
+        className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory h-[calc(100vh-160px)] items-center gap-6 px-4 sm:px-6 md:px-8"
         onScroll={(e) => {
           const container = e.currentTarget;
           const scrollLeft = container.scrollLeft;
@@ -36,7 +36,7 @@ export function CardList({ items, showListenButton }: CardListProps) {
               subtitle={item.description || ''}
               href={item.link}
               image={item.image}
-              className="w-full md:w-[280px] flex-shrink-0 snap-center first:ml-6 last:mr-6 md:first:ml-0 md:last:mr-0"
+              className="w-full md:w-[280px] flex-shrink-0 snap-center"
               isSquare={true}
               showListenButton={showListenButton}
               streamingOptions={item.streamingOptions}
