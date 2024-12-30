@@ -21,24 +21,6 @@ export const metadata: Metadata = {
   title: 'Flameboi',
   description: 'Independent Creative Artist',
   metadataBase: new URL('https://flameboi.com'),
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
-    ],
-    other: [
-      {
-        rel: 'mask-icon',
-        url: '/safari-pinned-tab.svg',
-        color: '#000000'
-      }
-    ]
-  },
   manifest: '/site.webmanifest',
   appleWebApp: {
     capable: true,
@@ -48,25 +30,56 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Flameboi',
     description: 'Independent Creative Artist',
-    url: 'https://flameboi.com',
     siteName: 'Flameboi',
+    url: 'https://flameboi.com',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Flameboi - Independent Creative Artist'
+        alt: 'Flameboi - Independent Creative Artist',
+        type: 'image/jpeg'
       }
     ],
     locale: 'en_US',
-    type: 'website',
+    type: 'profile',
+    firstName: 'Flameboi',
+    username: 'flameboi',
+    audio: [
+      {
+        url: '/audio/preview.mp3',
+        type: 'audio/mpeg'
+      }
+    ]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Flameboi',
     description: 'Independent Creative Artist',
-    images: ['/images/og-image.jpg'],
-    creator: '@flameboi'
+    images: {
+      url: '/images/og-image.jpg',
+      alt: 'Flameboi - Independent Creative Artist',
+      width: 1200,
+      height: 600
+    },
+    creator: '@flameboi',
+  },
+  alternates: {
+    canonical: 'https://flameboi.com',
+    languages: {
+      'en-US': 'https://flameboi.com',
+    }
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   }
 }
 
