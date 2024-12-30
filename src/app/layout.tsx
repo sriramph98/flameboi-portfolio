@@ -1,6 +1,7 @@
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from 'next'
 import { Inter_Tight, UnifrakturMaguntia } from 'next/font/google'
+import type { ReactElement } from 'react'
 import './globals.css'
 
 const interTight = Inter_Tight({
@@ -29,7 +30,7 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
-}) {
+}): ReactElement {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${interTight.variable} ${unifraktur.variable} font-sans`}>
