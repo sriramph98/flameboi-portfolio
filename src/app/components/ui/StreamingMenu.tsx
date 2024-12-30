@@ -69,10 +69,7 @@ export function StreamingMenu({ isOpen, onClose, options }: StreamingMenuProps) 
                   }`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    e.preventDefault();
                     setActiveItem(option.platform);
-                    const url = option.url.startsWith('http') ? option.url : `https://${option.url}`;
-                    window.open(url, '_blank', 'noopener,noreferrer');
                   }}
                 >
                   {Icon && <Icon className="text-xl" />}
