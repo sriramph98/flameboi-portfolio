@@ -1,5 +1,6 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Card } from './Card';
 import { MarketCard } from './MarketCard';
 
@@ -18,18 +19,69 @@ interface CardListProps {
 
 export function CardList({ items, showListenButton, isMarketplace }: CardListProps) {
   const [currentCard, setCurrentCard] = useState(1);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setShowLeftArrow(scrollLeft > 0);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener('resize', handleScroll);
+    return () => window.removeEventListener('resize', handleScroll);
+  }, [items]);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = direction === 'left' ? -280 : 280;
+      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
+      {/* Left Gradient Mask */}
+      <div className={`fixed left-0 top-1/2 -translate-y-1/2 h-[400px] w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-[1] transition-opacity duration-200 hidden md:block ${showLeftArrow ? 'opacity-100' : 'opacity-0'}`} />
+      
+      {/* Right Gradient Mask */}
+      <div className={`fixed right-0 top-1/2 -translate-y-1/2 h-[400px] w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-[1] transition-opacity duration-200 hidden md:block ${showRightArrow ? 'opacity-100' : 'opacity-0'}`} />
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={() => scroll('left')}
+        className={`fixed left-12 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-lg items-center justify-center z-[2] transition-opacity duration-200 hover:bg-neutral-50 hidden md:flex ${
+          showLeftArrow ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <FiChevronLeft className="text-2xl" />
+      </button>
+
+      <button
+        onClick={() => scroll('right')}
+        className={`fixed right-12 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-lg items-center justify-center z-[2] transition-opacity duration-200 hover:bg-neutral-50 hidden md:flex ${
+          showRightArrow ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <FiChevronRight className="text-2xl" />
+      </button>
+
       <div 
-        className="flex overflow-x-auto hide-scrollbar h-[calc(100vh-160px)] items-center md:gap-6 snap-x snap-mandatory md:snap-none px-4 sm:px-6 md:px-8"
+        className="relative flex overflow-x-auto hide-scrollbar h-[calc(100vh-160px)] items-center md:gap-6 snap-x snap-mandatory md:snap-none px-16"
         onScroll={(e) => {
           const container = e.currentTarget;
           const scrollLeft = container.scrollLeft;
           const cardWidth = window.innerWidth;
           const newCard = Math.round(scrollLeft / (cardWidth + 24)) + 1;
           setCurrentCard(newCard);
+          handleScroll();
         }}
+        ref={scrollContainerRef}
       >
         <div className="flex md:gap-6">
           {items.length > 0 ? (
