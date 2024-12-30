@@ -34,8 +34,7 @@ async function getWorkItems(category: string): Promise<WorkItem[]> {
 
     const tableMap: { [key: string]: string } = {
       music: 'Music',
-      mixing: 'Mixing',
-      editing: 'Editing'
+      mixing: 'Mixing'
     };
 
     const tableName = tableMap[category];
@@ -48,28 +47,16 @@ async function getWorkItems(category: string): Promise<WorkItem[]> {
     }).all();
 
     return records.map((record: AirtableRecord) => {
-      const streamingOptions = [
-        {
-          platform: 'Spotify',
-          url: `https://${record.get('Spotify')}` || '#'
-        },
-        {
-          platform: 'Apple Music',
-          url: `https://${record.get('Apple Music')}` || '#'
-        },
-        {
-          platform: 'YouTube',
-          url: `https://${record.get('YouTube')}` || '#'
-        },
-        {
-          platform: 'SoundCloud',
-          url: `https://${record.get('Sound Cloud')}` || '#'
-        },
-        {
-          platform: 'Amazon Music',
-          url: `https://${record.get('Amazon Music')}` || '#'
-        }
-      ].filter(option => option.url !== '#' && option.url !== 'https://undefined');
+      const streamingOptions = ['Spotify', 'Apple Music', 'YouTube', 'SoundCloud', 'Amazon Music']
+        .map(platform => ({
+          platform,
+          url: record.get(platform) || ''
+        }))
+        .filter(option => option.url !== '')
+        .map(option => ({
+          ...option,
+          url: option.url.startsWith('http') ? option.url : `https://${option.url}`
+        }));
 
       return {
         title: record.get('Title'),
@@ -88,7 +75,7 @@ async function getWorkItems(category: string): Promise<WorkItem[]> {
 
 // Validate category
 function isValidCategory(category: string): boolean {
-  return ['music', 'mixing', 'editing'].includes(category);
+  return ['music', 'mixing'].includes(category);
 }
 
 export const revalidate = 0
@@ -106,7 +93,7 @@ export default async function CategoryPage({ params }: { params: { category: str
         <Container>
           <CardList 
             items={items} 
-            showListenButton={params.category !== 'editing'} 
+            showListenButton={true}
           />
         </Container>
       </div>

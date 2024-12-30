@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-satoshi)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter-tight)', 'system-ui', 'sans-serif'],
+        logo: ['var(--font-unifraktur)', 'serif']
       },
       animation: {
         'scroll-text': 'scroll-text 10s linear infinite',

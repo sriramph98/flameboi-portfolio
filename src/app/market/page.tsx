@@ -1,14 +1,15 @@
 import { CardList } from '@/app/components/ui/CardList';
 import { Container } from '@/app/components/ui/Container';
 import { PageTransition } from '@/app/components/ui/PageTransition';
+import { Attachment } from 'airtable';
 
 // Add interface for market items
 interface MarketItem {
   id: string;
   title: string;
   description: string;
-  price: number;
-  image?: string;
+  price: string;
+  image?: Attachment;
   link: string;
 }
 
@@ -44,10 +45,10 @@ async function getMarketData(): Promise<MarketItem[]> {
 
       return {
         id: record.id,
-        title: record.get('Title'),
-        description: record.get('Description'),
-        price: record.get('Price'),
-        image: record.get('Image')?.[0]?.url,
+        title: record.get('Title') || '',
+        description: record.get('Description') || '',
+        price: record.get('Price') || 'Free',
+        image: record.get('Image')?.[0],
         link: link
       };
     });
@@ -68,9 +69,13 @@ export default async function MarketPage() {
         <Container>
           <CardList 
             items={marketItems.map(item => ({
-              ...item,
-              description: `${item.description} • ${item.price}`
+              title: item.title,
+              subtitle: item.price,
+              link: item.link,
+              image: item.image?.url
             }))} 
+            isMarketplace={true}
+            showListenButton={false}
           />
         </Container>
       </div>

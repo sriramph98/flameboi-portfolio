@@ -41,31 +41,31 @@ body {
 }
 
 .logo {
-  @apply text-lg sm:text-xl md:text-2xl font-black leading-none tracking-wider;
+  @apply text-2xl font-normal leading-none font-logo;
 }
 
 .bio {
-  @apply text-base sm:text-lg md:text-xl font-normal leading-none;
+  @apply text-xl font-normal leading-none;
 }
 
 .navActive {
-  @apply text-xl sm:text-2xl md:text-3xl font-semibold;
+  @apply text-3xl font-semibold;
 }
 
 .navInActive {
-  @apply text-xl sm:text-2xl md:text-3xl font-semibold text-neutral-400 transition ease-in-out hover:text-black;
+  @apply text-3xl font-semibold text-neutral-400 transition ease-in-out hover:text-black;
 }
 
 .subNavActive {
-  @apply text-lg sm:text-xl;
+  @apply text-xl;
 }
 
 .subNavInActive {
-  @apply text-lg sm:text-xl font-normal text-neutral-400 transition ease-in-out hover:text-black;
+  @apply text-xl font-normal text-neutral-400 transition ease-in-out hover:text-black;
 }
 
 .socials {
-  @apply text-sm sm:text-base text-neutral-400 transition ease-in-out hover:text-black;
+  @apply text-base text-neutral-400 transition ease-in-out hover:text-black;
 }
 
 .titlePlatform {
@@ -84,4 +84,21 @@ body {
 
 .animation-play-state-paused {
   animation-play-state: paused;
+}
+
+@keyframes blurIn {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+.blur-in {
+  animation: blurIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
