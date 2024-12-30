@@ -5,11 +5,12 @@ const nextConfig = {
     AIRTABLE_BASE_ID: process.env.AIRTABLE_BASE_ID,
   },
   images: {
-    domains: [
-      'v5.airtableusercontent.com', 
-      'dl.airtable.com',
-      'airtable.com',
-      'v5.airtablusercontent.com'
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'v5.airtableusercontent.com',
+        pathname: '/**',
+      },
     ],
   },
   output: 'standalone'
