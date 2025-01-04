@@ -19,6 +19,7 @@ interface AirtableRecord {
 
 async function getWorkItems(category: string): Promise<WorkItem[]> {
   try {
+    const noCache = new Date().getTime();
     const Airtable = require('airtable');
     
     if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
@@ -43,7 +44,8 @@ async function getWorkItems(category: string): Promise<WorkItem[]> {
     }
 
     const records = await base(tableName).select({
-      view: 'Grid view'
+      view: 'Grid view',
+      filterByFormula: `CREATED_TIME() <= '${new Date().toISOString()}'`
     }).all();
 
     return records.map((record: AirtableRecord) => {
@@ -78,7 +80,9 @@ function isValidCategory(category: string): boolean {
   return ['music', 'mixing'].includes(category);
 }
 
-export const revalidate = 0
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export const revalidate = 0;
 
 export default async function CategoryPage({ params }: { params: { category: string } }) {
   if (!isValidCategory(params.category)) {

@@ -43,5 +43,6 @@ export async function GET() {
   }
 }
 
+export const fetchCache = "force-no-store";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;

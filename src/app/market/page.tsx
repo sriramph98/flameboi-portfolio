@@ -21,6 +21,7 @@ interface AirtableRecord {
 
 async function getMarketData(): Promise<MarketItem[]> {
   try {
+    const noCache = new Date().getTime();
     const Airtable = require('airtable');
     
     if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
@@ -33,7 +34,8 @@ async function getMarketData(): Promise<MarketItem[]> {
     }).base(process.env.AIRTABLE_BASE_ID);
 
     const records = await base('Market').select({
-      view: 'Grid view'
+      view: 'Grid view',
+      filterByFormula: `CREATED_TIME() <= '${new Date().toISOString()}'`
     }).all();
 
     return records.map((record: AirtableRecord) => {
@@ -58,7 +60,9 @@ async function getMarketData(): Promise<MarketItem[]> {
   }
 }
 
-export const revalidate = false
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export const revalidate = 0;
 
 export default async function MarketPage() {
   const marketItems = await getMarketData();
