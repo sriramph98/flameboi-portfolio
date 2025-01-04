@@ -15,10 +15,21 @@ const nextConfig = {
         headers: [
           { key: 'Cache-Control', value: 'no-store, must-revalidate' },
           { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' }
         ],
       },
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, must-revalidate' },
+          { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' }
+        ],
+      }
     ]
   },
+  unstable_runtimeJS: true,
+  unstable_noStore: true,
   images: {
     remotePatterns: [
       {

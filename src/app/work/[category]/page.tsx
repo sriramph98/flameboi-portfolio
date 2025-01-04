@@ -1,7 +1,8 @@
+'use client';
 import { CardList } from '@/app/components/ui/CardList';
 import { Container } from '@/app/components/ui/Container';
 import { PageTransition } from '@/app/components/ui/PageTransition';
-import { notFound } from 'next/navigation';
+import useSWR from 'swr';
 
 interface WorkItem {
   title: string;
@@ -80,16 +81,21 @@ function isValidCategory(category: string): boolean {
   return ['music', 'mixing'].includes(category);
 }
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 export const revalidate = 0;
 
-export default async function CategoryPage({ params }: { params: { category: string } }) {
-  if (!isValidCategory(params.category)) {
-    notFound();
-  }
+export default function CategoryPage({ params }: { params: { category: string } }) {
+  const { data: items, error } = useSWR(
+    `/api/airtable?table=${params.category === 'music' ? 'Music' : 'Mixing'}`,
+    fetcher,
+    { refreshInterval: 5000 } // Poll every 5 seconds
+  );
 
-  const items = await getWorkItems(params.category);
+  if (error) return <div>Failed to load</div>;
+  if (!items) return <div>Loading...</div>;
 
   return (
     <PageTransition>
