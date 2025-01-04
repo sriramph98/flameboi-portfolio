@@ -1,4 +1,5 @@
 'use client';
+
 import { CardList } from '@/app/components/ui/CardList';
 import { Container } from '@/app/components/ui/Container';
 import { PageTransition } from '@/app/components/ui/PageTransition';
@@ -12,7 +13,9 @@ export default function CategoryPage({ params }: { params: { category: string } 
   const router = useRouter();
   
   const { data: items, error } = useSWR(
-    `/api/airtable?table=${params.category === 'music' ? 'Music' : 'Mixing'}`,
+    params.category && ['music', 'mixing'].includes(params.category)
+      ? `/api/airtable?table=${params.category === 'music' ? 'Music' : 'Mixing'}`
+      : null,
     fetcher,
     { 
       refreshInterval: 5000,

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export const fetchCache = "force-no-store";
 
 export async function GET(request: Request) {
@@ -26,8 +27,13 @@ export async function GET(request: Request) {
       })
       .all();
 
-    const data = records.map((record: any) => {
-      const streamingOptions = [
+    const data = records.map((record: any) => ({
+      title: record.get("Title") || "",
+      description: record.get("Description") || "",
+      platform: record.get("Platform") || "",
+      link: record.get("Link") || "#",
+      image: record.get("Image")?.[0]?.url || "",
+      streamingOptions: [
         "Spotify",
         "Apple Music",
         "YouTube",
@@ -44,17 +50,8 @@ export async function GET(request: Request) {
           url: option.url.startsWith("http")
             ? option.url
             : `https://${option.url}`,
-        }));
-
-      return {
-        title: record.get("Title"),
-        description: record.get("Description"),
-        platform: record.get("Platform"),
-        link: record.get("Link") || "#",
-        image: record.get("Image")?.[0]?.url,
-        streamingOptions,
-      };
-    });
+        })),
+    }));
 
     return NextResponse.json(data);
   } catch (error) {
