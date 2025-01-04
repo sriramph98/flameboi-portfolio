@@ -1,88 +1,69 @@
+'use client';
+
 import { CardList } from '@/app/components/ui/CardList';
 import { Container } from '@/app/components/ui/Container';
 import { PageTransition } from '@/app/components/ui/PageTransition';
-import { Attachment } from 'airtable';
+import { SkeletonLoader } from '@/app/components/ui/SkeletonLoader';
+import useSWR from 'swr';
 
-// Add interface for market items
 interface MarketItem {
   id: string;
   title: string;
   description: string;
   price: string;
-  image?: Attachment;
+  image: string | null;
   link: string;
 }
 
-// Add type for Airtable record
-interface AirtableRecord {
-  id: string;
-  get(field: string): any;
-}
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-async function getMarketData(): Promise<MarketItem[]> {
-  try {
-    const noCache = new Date().getTime();
-    const Airtable = require('airtable');
-    
-    if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
-      console.warn('Missing Airtable environment variables');
-      return [];
+export default function MarketPage() {
+  const { data: marketItems, error } = useSWR<MarketItem[]>(
+    '/api/airtable?table=Market',
+    fetcher,
+    {
+      refreshInterval: 5000,
+      revalidateOnFocus: true,
+      dedupingInterval: 1000
     }
+  );
 
-    const base = new Airtable({
-      apiKey: process.env.AIRTABLE_API_KEY
-    }).base(process.env.AIRTABLE_BASE_ID);
-
-    const records = await base('Market').select({
-      view: 'Grid view',
-      filterByFormula: `CREATED_TIME() <= '${new Date().toISOString()}'`
-    }).all();
-
-    return records.map((record: AirtableRecord) => {
-      let link = record.get('Link') || '#';
-      // Ensure the link starts with http:// or https://
-      if (link !== '#' && !link.startsWith('http://') && !link.startsWith('https://')) {
-        link = `https://${link}`;
-      }
-
-      return {
-        id: record.id,
-        title: record.get('Title') || '',
-        description: record.get('Description') || '',
-        price: record.get('Price') || 'Free',
-        image: record.get('Image')?.[0],
-        link: link
-      };
-    });
-  } catch (error) {
-    console.error('Error fetching market data:', error);
-    return [];
+  if (error) return <div>Failed to load</div>;
+  if (!marketItems) {
+    return (
+      <PageTransition>
+        <div className="flex-1 flex flex-col">
+          <Container>
+            <SkeletonLoader />
+          </Container>
+        </div>
+      </PageTransition>
+    );
   }
-}
-
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-export const revalidate = 0;
-
-export default async function MarketPage() {
-  const marketItems = await getMarketData();
 
   return (
     <PageTransition>
       <div className="flex-1 flex flex-col">
         <Container>
           <CardList 
-            items={marketItems.map(item => ({
-              title: item.title,
-              subtitle: item.price,
-              link: item.link,
-              image: item.image?.url
-            }))} 
+            items={marketItems.map(item => {
+              let link = item.link || '#';
+              if (link !== '#' && !link.startsWith('http://') && !link.startsWith('https://')) {
+                link = `https://${link}`;
+              }
+
+              return {
+                title: item.title || '',
+                subtitle: item.price || 'Free',
+                link: link,
+                image: item.image || undefined
+              };
+            })} 
             isMarketplace={true}
             showListenButton={false}
           />
         </Container>
       </div>
     </PageTransition>
-  )
+  );
 }

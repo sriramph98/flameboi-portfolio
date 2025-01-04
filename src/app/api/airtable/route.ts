@@ -27,31 +27,39 @@ export async function GET(request: Request) {
       })
       .all();
 
-    const data = records.map((record: any) => ({
-      title: record.get("Title") || "",
-      description: record.get("Description") || "",
-      platform: record.get("Platform") || "",
-      link: record.get("Link") || "#",
-      image: record.get("Image")?.[0]?.url || "",
-      streamingOptions: [
-        "Spotify",
-        "Apple Music",
-        "YouTube",
-        "SoundCloud",
-        "Amazon Music",
-      ]
-        .map((platform) => ({
-          platform,
-          url: record.get(platform) || "",
-        }))
-        .filter((option) => option.url !== "")
-        .map((option) => ({
-          ...option,
-          url: option.url.startsWith("http")
-            ? option.url
-            : `https://${option.url}`,
-        })),
-    }));
+    const data = records.map((record: any) => {
+      const imageField = record.get("Image");
+      const imageUrl =
+        imageField && imageField.length > 0 ? imageField[0].url : null;
+
+      return {
+        id: record.id,
+        title: record.get("Title") || "",
+        description: record.get("Description") || "",
+        price: record.get("Price") || "Free",
+        platform: record.get("Platform") || "",
+        link: record.get("Link") || "#",
+        image: imageUrl,
+        streamingOptions: [
+          "Spotify",
+          "Apple Music",
+          "YouTube",
+          "SoundCloud",
+          "Amazon Music",
+        ]
+          .map((platform) => ({
+            platform,
+            url: record.get(platform) || "",
+          }))
+          .filter((option) => option.url !== "")
+          .map((option) => ({
+            ...option,
+            url: option.url.startsWith("http")
+              ? option.url
+              : `https://${option.url}`,
+          })),
+      };
+    });
 
     return NextResponse.json(data);
   } catch (error) {

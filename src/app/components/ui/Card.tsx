@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from "framer-motion";
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { StreamingMenu } from './StreamingMenu';
@@ -45,7 +46,16 @@ export function Card({
   }, [title, subtitle]);
 
   return (
-    <div className={`flex flex-col items-center mx-auto max-w-[400px] ${className}`}>
+    <motion.div 
+      className={`group relative ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{
+        duration: 0.3,
+        ease: [0.22, 1, 0.36, 1]
+      }}
+    >
       {children ? children : (
         <div className="flex-1 w-full">
           <div className={`${isSquare ? 'aspect-square' : 'aspect-video'} w-full bg-neutral-100 mb-2 rounded-lg overflow-hidden`}>
@@ -121,6 +131,6 @@ export function Card({
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 } 

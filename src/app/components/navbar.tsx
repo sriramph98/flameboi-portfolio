@@ -9,7 +9,7 @@ export default function NavBar() {
     const isWorkActive = pathname.includes('/work');
     
     return (
-        <div className='space-x-8'>
+        <div className='space-x-4'>
             <Link 
                 href="/work/music" 
                 className={isWorkActive ? "navActive" : "navInActive"}

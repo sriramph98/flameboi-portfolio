@@ -3,6 +3,7 @@
 import { CardList } from '@/app/components/ui/CardList';
 import { Container } from '@/app/components/ui/Container';
 import { PageTransition } from '@/app/components/ui/PageTransition';
+import { SkeletonLoader } from '@/app/components/ui/SkeletonLoader';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import useSWR from 'swr';
@@ -35,7 +36,17 @@ export default function CategoryPage({ params }: { params: { category: string } 
   }
 
   if (error) return <div>Failed to load</div>;
-  if (!items) return <div>Loading...</div>;
+  if (!items) {
+    return (
+      <PageTransition>
+        <div className="flex-1 flex flex-col">
+          <Container>
+            <SkeletonLoader />
+          </Container>
+        </div>
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition>
