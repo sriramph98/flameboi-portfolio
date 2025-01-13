@@ -89,13 +89,13 @@ export function Card({
               </h3>
             </div>
             {showListenButton && (
-              <div className="relative ml-4 flex-shrink-0">
+              <div className="relative ml-3 flex-shrink-0">
                 <button
                   onClick={(e) => {
                     e.preventDefault();
                     setIsMenuOpen(true);
                   }}
-                  className="inline-block px-6 py-1.5 rounded-full bg-neutral-100 text-black font-medium hover:bg-neutral-200 transition-colors"
+                  className="inline-block px-4 py-1 text-sm rounded-full bg-neutral-100 text-black font-medium hover:bg-neutral-200 transition-colors"
                 >
                   Listen Now
                 </button>
@@ -111,7 +111,7 @@ export function Card({
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-6 py-2 rounded-full bg-neutral-100 text-black font-medium hover:bg-neutral-200 transition-colors ml-4 flex-shrink-0"
+                className="inline-block px-4 py-1 text-sm rounded-full bg-neutral-100 text-black font-medium hover:bg-neutral-200 transition-colors ml-3 flex-shrink-0"
               >
                 Get
               </a>

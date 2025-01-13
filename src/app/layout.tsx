@@ -2,6 +2,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata } from 'next'
 import { Inter_Tight, UnifrakturMaguntia } from 'next/font/google'
 import type { ReactElement } from 'react'
+import GoogleAnalytics from './components/GoogleAnalytics'
 import './globals.css'
 
 const interTight = Inter_Tight({
@@ -94,6 +95,9 @@ export default function RootLayout({
 }): ReactElement {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body className={`${interTight.variable} ${unifraktur.variable} font-sans`}>
         <div className='flex flex-col min-h-screen blur-in'>
           {children}
