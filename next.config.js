@@ -11,6 +11,11 @@ const nextConfig = {
         hostname: 'v5.airtableusercontent.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        pathname: '/**',
+      },
     ],
   },
   experimental: {

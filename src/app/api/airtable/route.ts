@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+import { getMarketItems, getReleasesByCategory } from "@/lib/sanity";
+import { CATEGORY_TABLE_MAP } from "@/app/lib/constants";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const fetchCache = "force-no-store";
@@ -16,51 +19,20 @@ export async function GET(request: Request) {
       );
     }
 
-    const Airtable = require("airtable");
-    const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
-      process.env.AIRTABLE_BASE_ID
+    if (table === "Market") {
+      const data = await getMarketItems();
+      return NextResponse.json(data);
+    }
+
+    const category = Object.keys(CATEGORY_TABLE_MAP).find(
+      (key) => CATEGORY_TABLE_MAP[key] === table
     );
 
-    const records = await base(table)
-      .select({
-        view: "Grid view",
-      })
-      .all();
+    if (!category) {
+      return NextResponse.json({ error: "Unknown table" }, { status: 400 });
+    }
 
-    const data = records.map((record: any) => {
-      const imageField = record.get("Image");
-      const imageUrl =
-        imageField && imageField.length > 0 ? imageField[0].url : null;
-
-      return {
-        id: record.id,
-        title: record.get("Title") || "",
-        description: record.get("Description") || "",
-        price: record.get("Price") || "Free",
-        platform: record.get("Platform") || "",
-        link: record.get("Link") || "#",
-        image: imageUrl,
-        streamingOptions: [
-          "Spotify",
-          "Apple Music",
-          "YouTube",
-          "SoundCloud",
-          "Amazon Music",
-        ]
-          .map((platform) => ({
-            platform,
-            url: record.get(platform) || "",
-          }))
-          .filter((option) => option.url !== "")
-          .map((option) => ({
-            ...option,
-            url: option.url.startsWith("http")
-              ? option.url
-              : `https://${option.url}`,
-          })),
-      };
-    });
-
+    const data = await getReleasesByCategory(category);
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching data:", error);

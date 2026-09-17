@@ -1,60 +1,25 @@
-interface Social {
-  id: string;
-  platform: string;
-  url: string;
-}
+'use client'
 
-interface AirtableRecord {
-  id: string;
-  get(field: string): any;
-}
+import { useSocialLinks } from '@/app/hooks/useSocialLinks'
 
-async function getSocials(): Promise<Social[]> {
-  try {
-    const Airtable = require('airtable');
-    
-    if (!process.env.AIRTABLE_API_KEY || !process.env.AIRTABLE_BASE_ID) {
-      console.warn('Missing Airtable environment variables');
-      return [];
-    }
-
-    const base = new Airtable({
-      apiKey: process.env.AIRTABLE_API_KEY
-    }).base(process.env.AIRTABLE_BASE_ID);
-
-    const records = await base('Socials').select({
-      view: 'Grid view'
-    }).all();
-
-    return records.map((record: AirtableRecord) => ({
-      id: record.id,
-      platform: record.get('Platform'),
-      url: record.get('URL')
-    }));
-  } catch (error) {
-    console.error('Error fetching socials:', error);
-    return [];
-  }
-}
-
-export const revalidate = 0
-
-export async function Socials({ className = '' }: { className?: string }) {
-  const socials = await getSocials();
+export function Socials({ className = '' }: { className?: string }) {
+  const { socialLinks } = useSocialLinks()
 
   return (
     <div className={`flex flex-wrap gap-4 ${className}`}>
-      {socials.map((social) => (
+      {socialLinks.map((social) => (
         <a
-          key={social.id}
+          key={social.platform}
           href={social.url}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...(social.platform !== 'Email' && {
+            target: '_blank',
+            rel: 'noopener noreferrer',
+          })}
           className="socials"
         >
           {social.platform}
         </a>
       ))}
     </div>
-  );
-} 
+  )
+}
