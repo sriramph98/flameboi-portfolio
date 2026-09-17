@@ -21,13 +21,18 @@ const config: Config = {
           "0 100px 80px rgba(0, 0, 0, 0.11)",
         ],
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
+        sans: ["var(--font-inter-tight)", "system-ui", "sans-serif"],
+        logo: ["var(--font-unifraktur)", "serif"],
+      },
+      animation: {
+        "scroll-text": "scroll-text 10s linear infinite",
+      },
+      keyframes: {
+        "scroll-text": {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
       },
       screens: {
         xs: "375px",
@@ -41,4 +46,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;

@@ -99,7 +99,7 @@ export default function RootLayout({
         <GoogleAnalytics />
       </head>
       <body className={`${interTight.variable} ${unifraktur.variable} font-sans`}>
-        <div className='flex flex-col min-h-screen blur-in'>
+        <div className='flex flex-col min-h-screen blur-in bg-white'>
           {children}
         </div>
         <SpeedInsights />
